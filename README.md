@@ -6,7 +6,7 @@ This gem check if required env variables are present and its format using the .e
 Add the gem to your gemfile:
 
 ```
-gem "dotenv-checker", github: "fastruby/dotenv-checker"
+gem "dotenv-checker", github: "fastruby/dotenv-checker", branch: :main
 ```
 
 Call `DotenvChecker.check!` in an initializer:
@@ -18,6 +18,14 @@ echo "DotenvChecker.check!" > "config/initializers/1-dotenv-checker.rb"
 > Note the `1-` in the name so it's executed before any other initializer, since initializers are run in alphabetical order.
 
 > You can use `DotenvChecker.check` without the `!` to show warnings instead of raising an exception.
+
+## Updating
+
+Since right know it's only available from GitHub, run:
+
+```
+bundle update --source dotenv-checker
+```
 
 # Configuring env variable
 
