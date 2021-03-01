@@ -1,11 +1,12 @@
 module DotenvChecker
-  def self.check!
-    sample = Rails.root.join(".env.sample")
-
-    return unless File.exist?(sample)
-
+  def self.analyze_variables
     missing_variables = []
     invalid_format = []
+
+    sample = Rails.root.join(".env.sample")
+
+    return [missing_variables, invalid_variables] unless File.exist?(sample)
+
 
     File.open(sample).each do |line|
       variable, config = line.split(" #")
@@ -32,6 +33,24 @@ module DotenvChecker
         invalid_format << variable_name unless valid
       end
     end
+
+    [missing_variables, invalid_format]
+  end
+
+  def self.check
+    missing_variables, invalid_format = analyze_variables
+    if missing_variables.any?
+      puts("WARNING - Missing environment variables: #{missing_variables.join(", ")}")
+    end
+
+    if invalid_format.any?
+      puts("WARNING - Environment variables with invalid format: #{invalid_format.join(", ")}")
+    end
+
+  end
+
+  def self.check!
+    missing_variables, invalid_format = analyze_variables
 
     if missing_variables.any?
       raise("Missing environment variables: #{missing_variables.join(", ")}")

@@ -17,6 +17,8 @@ echo "DotenvChecker.check!" > "config/initializers/1-dotenv-checker.rb"
 
 > Note the `1-` in the name so it's executed before any other initializer, since initializers are run in alphabetical order.
 
+> You can use `DotenvChecker.check` without the `!` to show warnings instead of raising an exception.
+
 # Configuring env variable
 
 In your `.env.sample` file, you can add comments to tell DotenvChecker how to validate the variable:
