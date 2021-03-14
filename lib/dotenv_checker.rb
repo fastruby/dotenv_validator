@@ -1,23 +1,22 @@
+require "fast_blank"
+
 module DotenvChecker
   def self.analyze_variables
+    return [], [] unless File.exist?(sample_file)
+
     missing_variables = []
     invalid_format = []
 
-    sample = Rails.root.join(".env.sample")
-
-    return [missing_variables, invalid_variables] unless File.exist?(sample)
-
-
-    File.open(sample).each do |line|
+    open_sample_file.each do |line|
       variable, config = line.split(" #")
       variable_name, _sample = variable.split("=")
       value = ENV[variable_name]
 
-      if value.blank?
+      if value.nil? || value.blank?
         missing_variables << variable_name if config.to_s.match?(/required/)
         next
       end
-  
+
       if config =~ /format=(.*)/
         valid =
           case $1
@@ -29,7 +28,7 @@ module DotenvChecker
           else
             value.match?(Regexp.new($1))
           end
-  
+
         invalid_format << variable_name unless valid
       end
     end
@@ -38,15 +37,20 @@ module DotenvChecker
   end
 
   def self.check
+    result = true
+
     missing_variables, invalid_format = analyze_variables
     if missing_variables.any?
       puts("WARNING - Missing environment variables: #{missing_variables.join(", ")}")
+      result = false
     end
 
     if invalid_format.any?
       puts("WARNING - Environment variables with invalid format: #{invalid_format.join(", ")}")
+      result = false
     end
 
+    result
   end
 
   def self.check!
@@ -66,7 +70,7 @@ module DotenvChecker
   rescue
     false
   end
-  
+
   def self.integer?(string)
     true if Integer(string)
   rescue
@@ -76,8 +80,16 @@ module DotenvChecker
   def self.email?(string)
     string.match?(/[\w@]+@[\w@]+\.[\w@]+/)
   end
-  
+
   def self.url?(string)
     string.match?(/https?:\/\/.+/)
+  end
+
+  def self.open_sample_file
+    File.open(sample_file)
+  end
+
+  def self.sample_file
+    File.join(File.expand_path(File.dirname(__FILE__)), ".env.sample")
   end
 end
