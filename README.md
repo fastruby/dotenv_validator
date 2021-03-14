@@ -1,4 +1,5 @@
-# dotenv-checker
+# Dotenv Checker
+
 This gem check if required env variables are present and its format using the .env and .env.sample files from Dotenv.
 
 # Installation
@@ -6,7 +7,7 @@ This gem check if required env variables are present and its format using the .e
 Add the gem to your gemfile:
 
 ```
-gem "dotenv-checker", github: "fastruby/dotenv-checker", branch: :main
+gem "dotenv_checker", github: "fastruby/dotenv_checker", branch: :main
 ```
 
 Call `DotenvChecker.check!` in an initializer:
@@ -24,7 +25,7 @@ echo "DotenvChecker.check!" > "config/initializers/1-dotenv-checker.rb"
 Since right know it's only available from GitHub, run:
 
 ```
-bundle update --source dotenv-checker
+bundle update --source dotenv_checker
 ```
 
 # Configuring env variable
