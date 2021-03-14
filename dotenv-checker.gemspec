@@ -1,14 +1,22 @@
 Gem::Specification.new do |s|
-  s.name = 'dotenv-checker'
+  s.name = 'dotenv_checker'
   s.version = '1.0.0'
   s.authors = ['Ariel Juodziukynas <arieljuod@gmail.com>']
   s.email = 'arieljuod@gmail.com'
   s.licenses = ["MIT"]
   s.summary = "Checks required env variables and its format using .evn and .env.sample files from Dotenv"
   s.description = "Checks required env variables and its format using .evn and .env.sample files from Dotenv"
-  s.homepage = "https://github.com/fastruby/dotenv-checker"
+  s.homepage = "https://github.com/fastruby/dotenv_checker"
   s.files = [
-    'lib/dotenv-checker.rb'
+    'lib/dotenv_checker.rb'
   ]
   s.require_paths = ['lib']
+
+  s.add_dependency "dotenv", ">= 2.7", "< 3.0"
+  s.add_dependency "fast_blank"
+
+  s.add_development_dependency "byebug", ">= 11.1", "< 12.0"
+  s.add_development_dependency "climate_control", ">= 1.0", "< 2.0"
+  s.add_development_dependency "rake", "~> 13.0", "< 14.0"
+  s.add_development_dependency "rspec", ">= 3.0", "< 4.0"
 end
