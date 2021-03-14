@@ -142,4 +142,77 @@ RSpec.describe DotenvChecker do
       end
     end
   end
+
+  describe ".check!" do
+    context "when there are no variables" do
+      it "returns true" do
+        expect do
+          DotenvChecker.check!
+        end.not_to raise_error(RuntimeError)
+      end
+    end
+
+    context "when there is a variable that is required" do
+      let(:sample_lines) do
+        StringIO.new("admin_password=super_secret # required")
+      end
+
+      context "and ENV has said variable" do
+        it "returns true" do
+          ClimateControl.modify admin_password: "solarwinds123" do
+            expect do
+              DotenvChecker.check!
+            end.not_to raise_error(RuntimeError)
+          end
+        end
+      end
+
+      context "and ENV does not have said variable" do
+        it "raises a runtime error with a message" do
+          msg = "Missing environment variables: admin_password"
+          expect do
+            DotenvChecker.check!
+          end.to raise_error(RuntimeError, msg)
+        end
+      end
+    end
+
+    context "when there is a variable that is optional" do
+      context "and ENV does not have said variable" do
+        let(:sample_lines) { StringIO.new("DISCOUNT=20") }
+
+        it "returns true" do
+          expect do
+            DotenvChecker.check!
+          end.not_to raise_error(RuntimeError)
+        end
+      end
+
+      context "and there is an integer format parameter in the comment" do
+        let(:sample_lines) { StringIO.new("DISCOUNT=20 # format=integer") }
+
+        context "and ENV variable is an integer" do
+          it "does not raise a runtime error" do
+            ClimateControl.modify DISCOUNT: "42" do
+              expect do
+                DotenvChecker.check!
+              end.not_to raise_error(RuntimeError)
+            end
+          end
+        end
+
+        context "and ENV variable is not an integer" do
+          it "raises a runtime error with a warning message" do
+            msg = "Environment variables with invalid format: DISCOUNT"
+
+            ClimateControl.modify DISCOUNT: "twenty" do
+              expect do
+                DotenvChecker.check!
+              end.to raise_error(RuntimeError, msg)
+            end
+          end
+        end
+      end
+    end
+  end
 end
