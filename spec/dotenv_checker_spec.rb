@@ -145,7 +145,7 @@ RSpec.describe DotenvChecker do
 
   describe ".check!" do
     context "when there are no variables" do
-      it "returns true" do
+      it "does not raise an error" do
         expect do
           DotenvChecker.check!
         end.not_to raise_error(RuntimeError)
@@ -158,7 +158,7 @@ RSpec.describe DotenvChecker do
       end
 
       context "and ENV has said variable" do
-        it "returns true" do
+        it "does not raise an error" do
           ClimateControl.modify admin_password: "solarwinds123" do
             expect do
               DotenvChecker.check!
@@ -181,7 +181,7 @@ RSpec.describe DotenvChecker do
       context "and ENV does not have said variable" do
         let(:sample_lines) { StringIO.new("DISCOUNT=20") }
 
-        it "returns true" do
+        it "does not raise an error" do
           expect do
             DotenvChecker.check!
           end.not_to raise_error(RuntimeError)
