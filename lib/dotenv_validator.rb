@@ -1,6 +1,6 @@
 require "fast_blank"
 
-module DotenvChecker
+module DotenvValidator
   def self.analyze_variables
     return [], [] unless File.exist?(sample_file)
 

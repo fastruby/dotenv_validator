@@ -1,14 +1,14 @@
 Gem::Specification.new do |s|
-  s.name = "dotenv_checker"
+  s.name = "dotenv_validator"
   s.version = "1.0.0"
   s.authors = ["Ariel Juodziukynas <arieljuod@gmail.com>"]
   s.email = "arieljuod@gmail.com"
   s.licenses = ["MIT"]
-  s.summary = "Checks required env variables and its format using .evn and .env.sample files from Dotenv"
-  s.description = "Checks required env variables and its format using .evn and .env.sample files from Dotenv"
-  s.homepage = "https://github.com/fastruby/dotenv_checker"
+  s.summary = "Checks required env variables and its format using .env and .env.sample files from Dotenv"
+  s.description = "Checks required env variables and its format using .env and .env.sample files from Dotenv"
+  s.homepage = "https://github.com/fastruby/dotenv_validator"
   s.files = [
-    "lib/dotenv_checker.rb"
+    "lib/dotenv_validator.rb"
   ]
   s.require_paths = ["lib"]
 
