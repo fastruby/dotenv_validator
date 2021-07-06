@@ -2,7 +2,7 @@
 name: Feature request
 about: Request a new feature
 title: "[REQUEST]"
-labels: 'enhancement'
+labels: enhancement
 assignees: ''
 
 ---
@@ -17,7 +17,7 @@ assignees: ''
 
 **Branch/Commit:**
 
-Inform what branch/commit/version of "dotenv_checker" you are using.
+Inform what branch/commit/version of "dotenv_validator" you are using.
 
 **Describe the feature:**
 
@@ -44,4 +44,4 @@ Include any mockup idea related to the requested feature if it applies.
 
 If you have resources related to the implementation or research for this feature, add them here.
 
-**I will abide by the [code of conduct](https://github.com/fastruby/dotenv_checker/blob/main/CODE_OF_CONDUCT.md)**
+**I will abide by the [code of conduct](https://github.com/fastruby/dotenv_validator/blob/main/CODE_OF_CONDUCT.md)**
