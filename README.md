@@ -1,36 +1,37 @@
-# Dotenv Checker
+# Dotenv Validator
 
-This gem check if required env variables are present and its format using the .env and .env.sample files from Dotenv.
+This gem validates `.env` variables. You can configure validation rules by adding the
+appropriate comments to the `.env.sample` file.
 
 # Installation
 
 Add the gem to your gemfile:
 
 ```
-gem "dotenv_checker", github: "fastruby/dotenv_checker", branch: :main
+gem "dotenv_validator", github: "fastruby/dotenv_validator", branch: :main
 ```
 
-Call `DotenvChecker.check!` in an initializer:
+Call `DotenvValidator.check!` in an initializer:
 
 ```
-echo "DotenvChecker.check!" > "config/initializers/1-dotenv-checker.rb"
+echo "DotenvValidator.check!" > "config/initializers/1_dotenv_validator.rb"
 ```
 
 > Note the `1-` in the name so it's executed before any other initializer, since initializers are run in alphabetical order.
 
-> You can use `DotenvChecker.check` without the `!` to show warnings instead of raising an exception.
+> You can use `DotenvValidator.check` without the `!` to show warnings instead of raising an exception.
 
 ## Updating
 
-Since right know it's only available from GitHub, run:
+At the moment it is only available on Github, so you would need to run:
 
 ```
-bundle update --source dotenv_checker
+bundle update --source dotenv_validator
 ```
 
 # Configuring env variable
 
-In your `.env.sample` file, you can add comments to tell DotenvChecker how to validate the variable:
+In your `.env.sample` file, you can add comments to tell DotenvValidator how to validate the variable:
 
 ```
 MY_REQUIRED_VAR=value #required
@@ -59,7 +60,7 @@ In the above example, `\d{3}_\w{3}` is converted to a regexp and the value is ch
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at [https://github.com/fastruby/dotenv_checker](https://github.com/fastruby/dotenv_checker). This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on GitHub at [https://github.com/fastruby/dotenv_validator](https://github.com/fastruby/dotenv_validator). This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
 When Submitting a Pull Request:
 

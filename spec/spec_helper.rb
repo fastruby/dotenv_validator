@@ -16,7 +16,7 @@ if ENV["COVERAGE"] == "true"
   puts "Using SimpleCov v#{SimpleCov::VERSION}"
 end
 
-require "dotenv_checker"
+require "dotenv_validator"
 require "climate_control"
 
 RSpec.configure do |config|

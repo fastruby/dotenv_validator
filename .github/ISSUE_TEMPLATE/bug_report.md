@@ -18,7 +18,7 @@ assignees: ''
 
 **Version, Branch, or Commit:**
 
-Inform what version, branch, commit of Dotenv Checker you are using.
+Inform what branch/commit/version of "dotenv_validator" you are using.
 
 **Expected behavior:**
 
@@ -50,4 +50,4 @@ _Delete any information that is not relevant._
 
 Include relevant log snippets or files here.
 
-**I will abide by the [code of conduct] (https://github.com/fastruby/dotenv_checker/blob/master/CODE_OF_CONDUCT.md)**
+**I will abide by the [code of conduct](https://github.com/fastruby/dotenv_validator/blob/main/CODE_OF_CONDUCT.md)**

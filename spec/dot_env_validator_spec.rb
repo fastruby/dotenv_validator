@@ -1,17 +1,18 @@
 require "spec_helper"
 
-RSpec.describe DotenvChecker do
+RSpec.describe DotenvValidator do
   let(:sample_lines) { StringIO.new("") }
 
   before do
     allow(File).to receive(:exist?).and_return(true)
-    allow(DotenvChecker).to receive(:open_sample_file).and_return(sample_lines)
+    allow(DotenvValidator).to receive(:open_sample_file).and_return(sample_lines)
+    allow(STDOUT).to receive(:puts) # this supresses puts
   end
 
   describe ".check" do
     context "when there are no variables" do
       it "returns true" do
-        expect(DotenvChecker.check).to be_truthy
+        expect(DotenvValidator.check).to be_truthy
       end
     end
 
@@ -23,20 +24,20 @@ RSpec.describe DotenvChecker do
       context "and ENV has said variable" do
         it "returns true" do
           ClimateControl.modify admin_password: "solarwinds123" do
-            expect(DotenvChecker.check).to be_truthy
+            expect(DotenvValidator.check).to be_truthy
           end
         end
       end
 
       context "and ENV does not have said variable" do
         it "returns false" do
-          expect(DotenvChecker.check).to be_falsey
+          expect(DotenvValidator.check).to be_falsey
         end
 
         it "displays a warning message in STDOUT" do
           msg = "WARNING - Missing environment variables: admin_password\n"
           expect do
-            DotenvChecker.check
+            DotenvValidator.check
           end.to output(msg).to_stdout
         end
       end
@@ -47,7 +48,7 @@ RSpec.describe DotenvChecker do
         let(:sample_lines) { StringIO.new("DISCOUNT=20") }
 
         it "returns true" do
-          expect(DotenvChecker.check).to be_truthy
+          expect(DotenvValidator.check).to be_truthy
         end
       end
 
@@ -57,7 +58,7 @@ RSpec.describe DotenvChecker do
         context "and ENV variable is an integer" do
           it "returns true" do
             ClimateControl.modify DISCOUNT: "42" do
-              expect(DotenvChecker.check).to be_truthy
+              expect(DotenvValidator.check).to be_truthy
             end
           end
         end
@@ -65,7 +66,7 @@ RSpec.describe DotenvChecker do
         context "and ENV variable is not an integer" do
           it "returns false" do
             ClimateControl.modify DISCOUNT: "twenty" do
-              expect(DotenvChecker.check).to be_falsey
+              expect(DotenvValidator.check).to be_falsey
             end
           end
 
@@ -74,7 +75,7 @@ RSpec.describe DotenvChecker do
 
             ClimateControl.modify DISCOUNT: "twenty" do
               expect do
-                DotenvChecker.check
+                DotenvValidator.check
               end.to output(msg).to_stdout
             end
           end
@@ -87,7 +88,7 @@ RSpec.describe DotenvChecker do
         context "and ENV variable is an url" do
           it "returns true" do
             ClimateControl.modify DISCOUNT_URL: "https://fastruby.io" do
-              expect(DotenvChecker.check).to be_truthy
+              expect(DotenvValidator.check).to be_truthy
             end
           end
         end
@@ -95,7 +96,7 @@ RSpec.describe DotenvChecker do
         context "and ENV variable is not an url" do
           it "returns false" do
             ClimateControl.modify DISCOUNT_URL: "foo/bar" do
-              expect(DotenvChecker.check).to be_falsey
+              expect(DotenvValidator.check).to be_falsey
             end
           end
 
@@ -104,7 +105,7 @@ RSpec.describe DotenvChecker do
 
             ClimateControl.modify DISCOUNT_URL: "foo/bar" do
               expect do
-                DotenvChecker.check
+                DotenvValidator.check
               end.to output(msg).to_stdout
             end
           end
@@ -117,7 +118,7 @@ RSpec.describe DotenvChecker do
         context "and ENV variable matches regexp" do
           it "returns true" do
             ClimateControl.modify KEY_ID: "567_FOO" do
-              expect(DotenvChecker.check).to be_truthy
+              expect(DotenvValidator.check).to be_truthy
             end
           end
         end
@@ -125,7 +126,7 @@ RSpec.describe DotenvChecker do
         context "and ENV variable is not an url" do
           it "returns false" do
             ClimateControl.modify KEY_ID: "567_12" do
-              expect(DotenvChecker.check).to be_falsey
+              expect(DotenvValidator.check).to be_falsey
             end
           end
 
@@ -134,7 +135,7 @@ RSpec.describe DotenvChecker do
 
             ClimateControl.modify KEY_ID: "567_88" do
               expect do
-                DotenvChecker.check
+                DotenvValidator.check
               end.to output(msg).to_stdout
             end
           end
@@ -147,8 +148,8 @@ RSpec.describe DotenvChecker do
     context "when there are no variables" do
       it "does not raise an error" do
         expect do
-          DotenvChecker.check!
-        end.not_to raise_error(RuntimeError)
+          DotenvValidator.check!
+        end.not_to raise_error
       end
     end
 
@@ -161,8 +162,8 @@ RSpec.describe DotenvChecker do
         it "does not raise an error" do
           ClimateControl.modify admin_password: "solarwinds123" do
             expect do
-              DotenvChecker.check!
-            end.not_to raise_error(RuntimeError)
+              DotenvValidator.check!
+            end.not_to raise_error
           end
         end
       end
@@ -171,7 +172,7 @@ RSpec.describe DotenvChecker do
         it "raises a runtime error with a message" do
           msg = "Missing environment variables: admin_password"
           expect do
-            DotenvChecker.check!
+            DotenvValidator.check!
           end.to raise_error(RuntimeError, msg)
         end
       end
@@ -183,8 +184,8 @@ RSpec.describe DotenvChecker do
 
         it "does not raise an error" do
           expect do
-            DotenvChecker.check!
-          end.not_to raise_error(RuntimeError)
+            DotenvValidator.check!
+          end.not_to raise_error
         end
       end
 
@@ -195,8 +196,8 @@ RSpec.describe DotenvChecker do
           it "does not raise a runtime error" do
             ClimateControl.modify DISCOUNT: "42" do
               expect do
-                DotenvChecker.check!
-              end.not_to raise_error(RuntimeError)
+                DotenvValidator.check!
+              end.not_to raise_error
             end
           end
         end
@@ -207,7 +208,7 @@ RSpec.describe DotenvChecker do
 
             ClimateControl.modify DISCOUNT: "twenty" do
               expect do
-                DotenvChecker.check!
+                DotenvValidator.check!
               end.to raise_error(RuntimeError, msg)
             end
           end
