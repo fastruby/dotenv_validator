@@ -17,7 +17,7 @@ Call `DotenvValidator.check!` in an initializer:
 echo "DotenvValidator.check!" > "config/initializers/1_dotenv_validator.rb"
 ```
 
-> Note the `1-` in the name so it's executed before any other initializer, since initializers are run in alphabetical order.
+> Note the `1_` in the name so it's executed before any other initializer, since initializers are run in alphabetical order.
 
 > You can use `DotenvValidator.check` without the `!` to show warnings instead of raising an exception.
 
