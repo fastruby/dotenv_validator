@@ -1,6 +1,13 @@
 require "fast_blank"
 
+# Knows how to check the environment variables and compares it to .env.sample
+# and the comments in every line of your .env.sample file.
 module DotenvValidator
+
+  # It analyzes the current environment and it compares it to the documentation
+  # present in .env.sample.
+  #
+  # @return [[String],[String]] An array with two arrays. First array: List of missing variables. Second array: List of variables with invalid format.
   def self.analyze_variables
     return [], [] unless File.exist?(sample_file)
 
@@ -36,6 +43,9 @@ module DotenvValidator
     [missing_variables, invalid_format]
   end
 
+  # It checks the current environment and it returns a boolean value.
+  #
+  # @return [Boolean] True if everything looks good. False otherwise.
   def self.check
     result = true
 
@@ -53,6 +63,9 @@ module DotenvValidator
     result
   end
 
+  # It checks the current environment and it raises a runtime exception.
+  #
+  # @raise [RuntimeError] Raised if a missing variable is found or an invalid format is encountered.
   def self.check!
     missing_variables, invalid_format = analyze_variables
 
@@ -65,22 +78,38 @@ module DotenvValidator
     end
   end
 
+  # It checks the value to check if it is a float or not.
+  #
+  # @param [String] A string
+  # @return [Boolean] True if it is a float value. False otherwise.
   def self.float?(string)
     true if Float(string)
   rescue
     false
   end
 
+  # It checks the value to check if it is an integer or not.
+  #
+  # @param [String] A string
+  # @return [Boolean] True if it is an integer value. False otherwise.
   def self.integer?(string)
     true if Integer(string)
   rescue
     false
   end
 
+  # It checks the value to check if it is an email or not.
+  #
+  # @param [String] A string
+  # @return [Boolean] True if it is an email value. False otherwise.
   def self.email?(string)
     string.match?(/[\w@]+@[\w@]+\.[\w@]+/)
   end
 
+  # It checks the value to check if it is a URL or not.
+  #
+  # @param [String] A string
+  # @return [Boolean] True if it is an URL value. False otherwise.
   def self.url?(string)
     string.match?(/https?:\/\/.+/)
   end
