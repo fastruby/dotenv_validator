@@ -1,9 +1,8 @@
-require "fast_blank"
+require 'fast_blank'
 
 # Knows how to check the environment variables and compares it to .env.sample
 # and the comments in every line of your .env.sample file.
 module DotenvValidator
-
   # It analyzes the current environment and it compares it to the documentation
   # present in .env.sample.
   #
@@ -15,8 +14,8 @@ module DotenvValidator
     invalid_format = []
 
     open_sample_file.each do |line|
-      variable, config = line.split(" #")
-      variable_name, _sample = variable.split("=")
+      variable, config = line.split(' #')
+      variable_name, _sample = variable.split('=')
       value = ENV[variable_name]
 
       if value.nil? || value.blank?
@@ -24,20 +23,20 @@ module DotenvValidator
         next
       end
 
-      if config =~ /format=(.*)/
-        valid =
-          case $1
-          when "int", "integer" then integer?(value)
-          when "float" then float?(value)
-          when "str", "string" then false
-          when "email" then email?(value)
-          when "url" then url?(value)
-          else
-            value.match?(Regexp.new($1))
-          end
+      next unless config =~ /format=(.*)/
 
-        invalid_format << variable_name unless valid
-      end
+      valid =
+        case Regexp.last_match(1)
+        when 'int', 'integer' then integer?(value)
+        when 'float' then float?(value)
+        when 'str', 'string' then false
+        when 'email' then email?(value)
+        when 'url' then url?(value)
+        else
+          value.match?(Regexp.new(Regexp.last_match(1)))
+        end
+
+      invalid_format << variable_name unless valid
     end
 
     [missing_variables, invalid_format]
@@ -51,12 +50,12 @@ module DotenvValidator
 
     missing_variables, invalid_format = analyze_variables
     if missing_variables.any?
-      puts("WARNING - Missing environment variables: #{missing_variables.join(", ")}")
+      puts("WARNING - Missing environment variables: #{missing_variables.join(', ')}")
       result = false
     end
 
     if invalid_format.any?
-      puts("WARNING - Environment variables with invalid format: #{invalid_format.join(", ")}")
+      puts("WARNING - Environment variables with invalid format: #{invalid_format.join(', ')}")
       result = false
     end
 
@@ -69,13 +68,9 @@ module DotenvValidator
   def self.check!
     missing_variables, invalid_format = analyze_variables
 
-    if missing_variables.any?
-      raise("Missing environment variables: #{missing_variables.join(", ")}")
-    end
+    raise("Missing environment variables: #{missing_variables.join(', ')}") if missing_variables.any?
 
-    if invalid_format.any?
-      raise("Environment variables with invalid format: #{invalid_format.join(", ")}")
-    end
+    raise("Environment variables with invalid format: #{invalid_format.join(', ')}") if invalid_format.any?
   end
 
   # It checks the value to check if it is a float or not.
@@ -84,7 +79,7 @@ module DotenvValidator
   # @return [Boolean] True if it is a float value. False otherwise.
   def self.float?(string)
     true if Float(string)
-  rescue
+  rescue StandardError
     false
   end
 
@@ -94,7 +89,7 @@ module DotenvValidator
   # @return [Boolean] True if it is an integer value. False otherwise.
   def self.integer?(string)
     true if Integer(string)
-  rescue
+  rescue StandardError
     false
   end
 
@@ -111,7 +106,7 @@ module DotenvValidator
   # @param [String] A string
   # @return [Boolean] True if it is an URL value. False otherwise.
   def self.url?(string)
-    string.match?(/https?:\/\/.+/)
+    string.match?(%r{https?://.+})
   end
 
   def self.open_sample_file
@@ -119,6 +114,6 @@ module DotenvValidator
   end
 
   def self.sample_file
-    File.join(File.expand_path(File.dirname(__FILE__)), ".env.sample")
+    File.join(__dir__, '.env.sample')
   end
 end
