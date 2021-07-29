@@ -1,0 +1,4 @@
+#!/usr/bin/env ruby
+
+system("bundle")
+system("overcommit --install")
