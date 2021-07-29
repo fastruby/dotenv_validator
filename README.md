@@ -60,6 +60,8 @@ In the above example, `\d{3}_\w{3}` is converted to a regexp and the value is ch
 
 ## Contributing
 
+Want to make your first contribution to this project? Get started with some of [our good first issues](https://github.com/fastruby/dotenv_validator/contribute)!
+
 Bug reports and pull requests are welcome on GitHub at [https://github.com/fastruby/dotenv_validator](https://github.com/fastruby/dotenv_validator). This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
 When Submitting a Pull Request:
@@ -71,3 +73,9 @@ When Submitting a Pull Request:
 * If changes to the behavior are made, clearly describe what changes.
 
 * If changes to the UI are made, please include screenshots of the before and after.
+
+## Sponsorship
+
+![FastRuby.io | Rails Upgrade Services](fastruby-logo.png)
+
+`dotenv_validator` is maintained and funded by [FastRuby.io](https://fastruby.io). The names and logos for FastRuby.io are trademarks of The Lean Software Boutique LLC.
