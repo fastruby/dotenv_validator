@@ -6,3 +6,7 @@ Gemfile.lock
 
 # SimpleCov
 coverage
+
+# versions managers
+.ruby-version
+.tool-versions
