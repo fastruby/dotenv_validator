@@ -1,13 +1,25 @@
+require_relative "lib/version"
+
 Gem::Specification.new do |s|
   s.name = "dotenv_validator"
-  s.version = "1.0.0"
-  s.authors = ["Ariel Juodziukynas <arieljuod@gmail.com>"]
-  s.email = "arieljuod@gmail.com"
+  s.version = DotenvValidator::VERSION
+  s.authors = ["Ariel Juodziukynas",
+               "Ernesto Tagwerker",
+               "Francois Buys",
+               "Luis Sagastume",
+               "Robert Dormer"]
+  s.email = ["arieljuod@gmail.com",
+             "ernesto+github@ombulabs.com",
+             "francois@ombulabs.com",
+             "luis@ombulabs.com",
+             "robert@ombulabs.com"
+            ]
   s.licenses = ["MIT"]
-  s.summary = "Checks required env variables and its format using .env and .env.sample files from Dotenv"
-  s.description = "Checks required env variables and its format using .env and .env.sample files from Dotenv"
+  s.summary = "Checks required env variables and its format using .env.sample"
+  s.description = "Checks required env variables and its format using dotenv and .env.sample files. Sample files include validation documentation which is interpreted and used to validate your environment."
   s.homepage = "https://github.com/fastruby/dotenv_validator"
   s.files = [
+    "lib/version.rb",
     "lib/dotenv_validator.rb"
   ]
   s.require_paths = ["lib"]
