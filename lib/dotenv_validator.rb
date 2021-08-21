@@ -114,6 +114,21 @@ module DotenvValidator
   end
 
   def self.sample_file
-    File.join(__dir__, '.env.sample')
+    File.join(root, '.env.sample')
+  end
+
+  # Internal: `Rails.root` is nil in Rails 4.1 before the application is
+  # initialized, so this falls back to the `RAILS_ROOT` environment variable,
+  # or the current working directory.
+  #
+  # Taken from Dotenv source code.
+  def self.root
+    root_or_pwd = Pathname.new(ENV["RAILS_ROOT"] || Dir.pwd)
+
+    if defined?(Rails)
+      Rails.root || root_or_pwd
+    else
+      root_or_pwd
+    end
   end
 end
