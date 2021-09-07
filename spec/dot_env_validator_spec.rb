@@ -52,6 +52,18 @@ RSpec.describe DotenvValidator do
         end
       end
 
+      context 'and there is a string format parameter in the comment' do
+        let(:sample_lines) { StringIO.new('NAME=20 # format=string') }
+
+        context 'and ENV variable is a string' do
+          it 'returns true' do
+            ClimateControl.modify NAME: 'something' do
+              expect(DotenvValidator.check).to be_truthy
+            end
+          end
+        end
+      end
+
       context 'and there is an integer format parameter in the comment' do
         let(:sample_lines) { StringIO.new('DISCOUNT=20 # format=integer') }
 

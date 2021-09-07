@@ -29,7 +29,7 @@ module DotenvValidator
         case Regexp.last_match(1)
         when 'int', 'integer' then integer?(value)
         when 'float' then float?(value)
-        when 'str', 'string' then false
+        when 'str', 'string' then true
         when 'email' then email?(value)
         when 'url' then url?(value)
         else
