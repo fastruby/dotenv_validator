@@ -53,6 +53,7 @@ RSpec.describe DotenvValidator do
       end
 
       context 'and there is a string format parameter in the comment' do
+        # anything counts as a string, since env variables are all strings by default
         let(:sample_lines) { StringIO.new('NAME=20 # format=string') }
 
         context 'and ENV variable is a string' do
