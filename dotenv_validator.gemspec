@@ -1,4 +1,4 @@
-require_relative 'lib/version'
+require_relative 'lib/dotenv_validator/version'
 
 Gem::Specification.new do |s|
   s.name = 'dotenv_validator'
@@ -18,7 +18,7 @@ Gem::Specification.new do |s|
   s.description = 'Checks required env variables and its format using dotenv and .env.sample files. Sample files include validation documentation which is interpreted and used to validate your environment.'
   s.homepage = 'https://github.com/fastruby/dotenv_validator'
   s.files = [
-    'lib/version.rb',
+    'lib/dotenv_validator/version.rb',
     'lib/dotenv_validator.rb'
   ]
   s.require_paths = ['lib']
