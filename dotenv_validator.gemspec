@@ -23,7 +23,6 @@ Gem::Specification.new do |s|
   ]
   s.require_paths = ['lib']
 
-  s.add_dependency 'dotenv', '>= 2.7', '< 3.0'
   s.add_dependency 'fast_blank', '~> 1.0.0'
 
   s.add_development_dependency 'byebug', '>= 11.1', '< 12.0'
