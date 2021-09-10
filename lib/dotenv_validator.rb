@@ -1,4 +1,5 @@
 require 'fast_blank'
+require 'pathname'
 
 # Knows how to check the environment variables and compares it to .env.sample
 # and the comments in every line of your .env.sample file.
