@@ -10,3 +10,6 @@ coverage
 # versions managers
 .ruby-version
 .tool-versions
+
+# Built gems
+pkg
