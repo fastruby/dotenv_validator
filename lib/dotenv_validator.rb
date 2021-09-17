@@ -33,6 +33,7 @@ module DotenvValidator
         when 'str', 'string' then true
         when 'email' then email?(value)
         when 'url' then url?(value)
+        when 'bool', 'boolean' then boolean?(value)
         else
           value.match?(Regexp.new(Regexp.last_match(1)))
         end
@@ -108,6 +109,14 @@ module DotenvValidator
   # @return [Boolean] True if it is an URL value. False otherwise.
   def self.url?(string)
     string.match?(%r{https?://.+})
+  end
+
+  # It checks the value to check if it is a boolean or not.
+  #
+  # @param [String] A string
+  # @return [Boolean] True if it is a boolean value. False otherwise.
+  def self.boolean?(string)
+    string.match?(/(true|false)/)
   end
 
   def self.open_sample_file
