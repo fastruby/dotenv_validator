@@ -99,7 +99,7 @@ module DotenvValidator
   # @param [String] A string
   # @return [Boolean] True if it is an email value. False otherwise.
   def self.email?(string)
-    string.match?(/[\w@]+@[\w@]+\.[\w@]+/)
+    string.match?(URI::MailTo::EMAIL_REGEXP)
   end
 
   # It checks the value to check if it is a URL or not.
@@ -107,7 +107,7 @@ module DotenvValidator
   # @param [String] A string
   # @return [Boolean] True if it is an URL value. False otherwise.
   def self.url?(string)
-    string.match?(%r{https?://.+})
+    string.match?(/\A#{URI::DEFAULT_PARSER.make_regexp(%w[http https])}\z/)
   end
 
   def self.open_sample_file
