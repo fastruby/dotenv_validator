@@ -125,6 +125,36 @@ RSpec.describe DotenvValidator do
         end
       end
 
+      context 'and there is a boolean format parameter in the comment' do
+        let(:sample_lines) { StringIO.new('MAYBE=true # format=boolean') }
+
+        context 'and ENV variable is a boolean' do
+          it 'returns true' do
+            ClimateControl.modify MAYBE: 'false' do
+              expect(DotenvValidator.check).to be_truthy
+            end
+          end
+        end
+
+        context 'and ENV variable is not a boolean' do
+          it 'returns false' do
+            ClimateControl.modify MAYBE: 'possibly' do
+              expect(DotenvValidator.check).to be_falsy
+            end
+          end
+        end
+
+        it 'displays a warning message in STDOUT' do
+          msg = "WARNING - Environment variables with invalid format: MAYBE\n"
+
+          ClimateControl.modify MAYBE: 'possibly' do
+            expect do
+              DotenvValidator.check
+            end.to output(msg).to_stdout
+          end
+        end
+      end
+
       context 'and there is a regexp format parameter in the comment' do
         let(:sample_lines) { StringIO.new('KEY_ID=123_ABC # format=\d{3}_\w{3}') }
 
@@ -220,6 +250,32 @@ RSpec.describe DotenvValidator do
             msg = 'Environment variables with invalid format: DISCOUNT'
 
             ClimateControl.modify DISCOUNT: 'twenty' do
+              expect do
+                DotenvValidator.check!
+              end.to raise_error(RuntimeError, msg)
+            end
+          end
+        end
+      end
+
+      context 'and there is a boolean format parameter in the comment' do
+        let(:sample_lines) { StringIO.new('MAYBE=true # format=boolean') }
+
+        context 'and ENV variable is a boolean' do
+          it 'does not raise a runtime error' do
+            ClimateControl.modify MAYBE: 'false' do
+              expect do
+                DotenvValidator.check!
+              end.not_to raise_error
+            end
+          end
+        end
+
+        context 'and ENV variable is not a boolean' do
+          it 'raises a runtime error with a warning message' do
+            msg = 'Environment variables with invalid format: MAYBE'
+
+            ClimateControl.modify MAYBE: 'possibly' do
               expect do
                 DotenvValidator.check!
               end.to raise_error(RuntimeError, msg)

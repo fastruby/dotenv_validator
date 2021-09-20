@@ -46,6 +46,7 @@ THIS_IS_A_REQUIRED_EMAIL=123 #required,format=email
 - `str` or `string` (accepts anything)
 - `email` (checks value against `/[\w@]+@[\w@]+\.[\w@]+/`)
 - `url` (checks value against `/https?:\/\/.+/`)
+- `bool` or `boolean` (checks value against `true` or `false`, case sensitive)
 - any other value acts as a regexp!
 
 ### Regexp format
