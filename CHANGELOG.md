@@ -2,6 +2,7 @@
 
 * [BUGFIX] Fix the way that we calculate the path to the .env.sample file (by [@etagwerker][])
 * [Feature] Add boolean format
+* [FEATURE] [Better error management for a scenario where .env.sample is missing](https://github.com/fastruby/dotenv_validator/pull/40)
 
 # v1.0.0 / 2021-07-29 [(commits)](https://github.com/fastruby/dotenv_validator/tree/v1.0.0)
 
