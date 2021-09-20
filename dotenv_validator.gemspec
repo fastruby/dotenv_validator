@@ -19,6 +19,7 @@ Gem::Specification.new do |s|
   s.homepage = 'https://github.com/fastruby/dotenv_validator'
   s.files = [
     'lib/dotenv_validator/version.rb',
+    'lib/dotenv_validator/errors.rb',
     'lib/dotenv_validator.rb'
   ]
   s.require_paths = ['lib']

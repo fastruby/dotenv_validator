@@ -5,11 +5,14 @@ RSpec.describe DotenvValidator do
 
   before do
     allow(File).to receive(:exist?).and_return(true)
-    allow(DotenvValidator).to receive(:open_sample_file).and_return(sample_lines)
     allow(STDOUT).to receive(:puts) # this supresses puts
   end
 
   describe '.check' do
+    before do
+      allow(DotenvValidator).to receive(:open_sample_file).and_return(sample_lines)
+    end
+
     context 'when there are no variables' do
       it 'returns true' do
         expect(DotenvValidator.check).to be_truthy
@@ -188,6 +191,10 @@ RSpec.describe DotenvValidator do
   end
 
   describe '.check!' do
+    before do
+      allow(DotenvValidator).to receive(:open_sample_file).and_return(sample_lines)
+    end
+
     context 'when there are no variables' do
       it 'does not raise an error' do
         expect do
@@ -281,6 +288,30 @@ RSpec.describe DotenvValidator do
               end.to raise_error(RuntimeError, msg)
             end
           end
+        end
+      end
+    end
+  end
+
+  describe '.open_sample_file' do
+    context 'when sample file exists' do
+      it 'opens the file' do
+        ClimateControl.modify RAILS_ROOT: 'spec/support' do
+          expect(DotenvValidator.open_sample_file).to be_truthy
+        end
+      end
+    end
+
+    context 'when sample file does not exist' do
+      let(:message) do
+        'spec/support/not_found/.env.sample was not found!'
+      end
+
+      it 'raises an error because it requires this file to validate ENV' do
+        ClimateControl.modify RAILS_ROOT: 'spec/support/not_found' do
+          expect do
+            DotenvValidator.open_sample_file
+          end.to raise_error(DotenvValidator::SampleFileNotFoundError, message)
         end
       end
     end

@@ -1,5 +1,6 @@
 # main [(unreleased)](https://github.com/fastruby/dotenv_validator/compare/v1.1.0...main)
 
+* [FEATURE: Better error management for a scenario where .env.sample is missing](https://github.com/fastruby/dotenv_validator/pull/40)
 * [FEATURE: Add boolean format](https://github.com/fastruby/dotenv_validator/pull/38)
 
 # v1.1.0 /2021-09-14 [(commits)](https://github.com/fastruby/dotenv_validator/compare/v1.0.0...v1.1.0)
