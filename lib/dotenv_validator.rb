@@ -1,5 +1,8 @@
+# frozen_string_literal: true
+
 require 'fast_blank'
 require 'pathname'
+require 'dotenv_validator/errors'
 
 # Knows how to check the environment variables and compares it to .env.sample
 # and the comments in every line of your .env.sample file.
@@ -121,6 +124,8 @@ module DotenvValidator
 
   def self.open_sample_file
     File.open(sample_file)
+  rescue Errno::ENOENT
+    raise DotenvValidator::SampleFileNotFoundError, "#{sample_file} was not found!"
   end
 
   def self.sample_file
@@ -133,7 +138,7 @@ module DotenvValidator
   #
   # Taken from Dotenv source code.
   def self.root
-    root_or_pwd = Pathname.new(ENV["RAILS_ROOT"] || Dir.pwd)
+    root_or_pwd = Pathname.new(ENV['RAILS_ROOT'] || Dir.pwd)
 
     if defined?(Rails)
       Rails.root || root_or_pwd
