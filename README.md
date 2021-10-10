@@ -1,14 +1,14 @@
 # Dotenv Validator
 
-This gem validates `.env` variables. You can configure validation rules by adding the
-appropriate comments to the `.env.sample` file.
+This gem validates `.env` variables. You can configure validation rules by
+adding the appropriate comments to the `.env.sample` file.
 
 # Installation
 
-Add the gem to your gemfile:
+Add the gem to your Gemfile:
 
 ```
-gem "dotenv_validator", github: "fastruby/dotenv_validator", branch: :main
+gem "dotenv_validator"
 ```
 
 Call `DotenvValidator.check!` in an initializer:
@@ -23,10 +23,10 @@ echo "DotenvValidator.check!" > "config/initializers/1_dotenv_validator.rb"
 
 ## Updating
 
-At the moment it is only available on Github, so you would need to run:
+Simply run:
 
 ```
-bundle update --source dotenv_validator
+bundle update dotenv_validator
 ```
 
 # Configuring env variable
