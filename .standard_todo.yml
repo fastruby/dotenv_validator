@@ -2,21 +2,5 @@
 # Remove from this list as you refactor files.
 ---
 ignore:
-- Gemfile:
-  - Style/StringLiterals
-- Rakefile:
-  - Style/StringLiterals
-- dotenv_validator.gemspec:
-  - Style/StringLiterals
-  - Layout/ArrayAlignment
-- lib/dotenv_validator.rb:
-  - Style/StringLiterals
-  - Style/StringLiteralsInInterpolation
-  - Style/RescueStandardError
-- lib/dotenv_validator/version.rb:
-  - Style/StringLiterals
 - spec/dot_env_validator_spec.rb:
-  - Style/StringLiterals
   - Style/GlobalStdStream
-- spec/spec_helper.rb:
-  - Style/StringLiterals
