@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require 'fast_blank'
-require 'pathname'
-require 'dotenv_validator/errors'
+require "fast_blank"
+require "pathname"
+require "dotenv_validator/errors"
 
 # Knows how to check the environment variables and compares it to .env.sample
 # and the comments in every line of your .env.sample file.
@@ -18,8 +18,8 @@ module DotenvValidator
     invalid_format = []
 
     open_sample_file.each do |line|
-      variable, config = line.split(' #')
-      variable_name, _sample = variable.split('=')
+      variable, config = line.split(" #")
+      variable_name, _sample = variable.split("=")
       value = ENV[variable_name]
 
       if value.nil? || value.blank?
@@ -31,12 +31,12 @@ module DotenvValidator
 
       valid =
         case Regexp.last_match(1)
-        when 'int', 'integer' then integer?(value)
-        when 'float' then float?(value)
-        when 'str', 'string' then true
-        when 'email' then email?(value)
-        when 'url' then url?(value)
-        when 'bool', 'boolean' then boolean?(value)
+        when "int", "integer" then integer?(value)
+        when "float" then float?(value)
+        when "str", "string" then true
+        when "email" then email?(value)
+        when "url" then url?(value)
+        when "bool", "boolean" then boolean?(value)
         else
           value.match?(Regexp.new(Regexp.last_match(1)))
         end
@@ -55,12 +55,12 @@ module DotenvValidator
 
     missing_variables, invalid_format = analyze_variables
     if missing_variables.any?
-      puts("WARNING - Missing environment variables: #{missing_variables.join(', ')}")
+      puts("WARNING - Missing environment variables: #{missing_variables.join(", ")}")
       result = false
     end
 
     if invalid_format.any?
-      puts("WARNING - Environment variables with invalid format: #{invalid_format.join(', ')}")
+      puts("WARNING - Environment variables with invalid format: #{invalid_format.join(", ")}")
       result = false
     end
 
@@ -73,9 +73,9 @@ module DotenvValidator
   def self.check!
     missing_variables, invalid_format = analyze_variables
 
-    raise("Missing environment variables: #{missing_variables.join(', ')}") if missing_variables.any?
+    raise("Missing environment variables: #{missing_variables.join(", ")}") if missing_variables.any?
 
-    raise("Environment variables with invalid format: #{invalid_format.join(', ')}") if invalid_format.any?
+    raise("Environment variables with invalid format: #{invalid_format.join(", ")}") if invalid_format.any?
   end
 
   # It checks the value to check if it is a float or not.
@@ -84,7 +84,7 @@ module DotenvValidator
   # @return [Boolean] True if it is a float value. False otherwise.
   def self.float?(string)
     true if Float(string)
-  rescue StandardError
+  rescue
     false
   end
 
@@ -94,7 +94,7 @@ module DotenvValidator
   # @return [Boolean] True if it is an integer value. False otherwise.
   def self.integer?(string)
     true if Integer(string)
-  rescue StandardError
+  rescue
     false
   end
 
@@ -129,7 +129,7 @@ module DotenvValidator
   end
 
   def self.sample_file
-    File.join(root, '.env.sample')
+    File.join(root, ".env.sample")
   end
 
   # Internal: `Rails.root` is nil in Rails 4.1 before the application is
@@ -138,7 +138,7 @@ module DotenvValidator
   #
   # Taken from Dotenv source code.
   def self.root
-    root_or_pwd = Pathname.new(ENV['RAILS_ROOT'] || Dir.pwd)
+    root_or_pwd = Pathname.new(ENV["RAILS_ROOT"] || Dir.pwd)
 
     if defined?(Rails)
       Rails.root || root_or_pwd
