@@ -1,7 +1,7 @@
-if ENV['COVERAGE'] == 'true'
-  require 'simplecov'
-  require 'simplecov-console'
-  require 'codecov'
+if ENV["COVERAGE"] == "true"
+  require "simplecov"
+  require "simplecov-console"
+  require "codecov"
 
   SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter[
     SimpleCov::Formatter::HTMLFormatter,
@@ -10,14 +10,14 @@ if ENV['COVERAGE'] == 'true'
   ]
 
   SimpleCov.start do
-    track_files 'lib/**/*.rb'
+    track_files "lib/**/*.rb"
   end
 
   puts "Using SimpleCov v#{SimpleCov::VERSION}"
 end
 
-require 'dotenv_validator'
-require 'climate_control'
+require "dotenv_validator"
+require "climate_control"
 
 RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate

@@ -1,6 +1,6 @@
 # .github/workflows/ci.yml
 
-name: Matrix Testing
+name: Matrix Testing + Lint
 
 on:
   push:
@@ -11,6 +11,14 @@ on:
     - main
 
 jobs:
+  lint:
+    steps:
+    - uses: actions/checkout@v2
+    - uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: "3.0"
+    - run: bundle install
+    - run: bundle exec standardrb
   test:
     runs-on: ${{ matrix.os }}-latest
     strategy:
