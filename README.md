@@ -1,5 +1,7 @@
 # Dotenv Validator
 
+[![Gem Version](https://badge.fury.io/rb/dotenv_validator.svg)](https://badge.fury.io/rb/dotenv_validator) [![Matrix Testing + Lint](https://github.com/fastruby/dotenv_validator/actions/workflows/main.yml/badge.svg)](https://github.com/fastruby/dotenv_validator/actions/workflows/main.yml) [![codecov](https://codecov.io/gh/fastruby/dotenv_validator/branch/main/graph/badge.svg)](https://codecov.io/gh/fastruby/dotenv_validator) [![Docs](http://img.shields.io/badge/yard-docs-blue.svg)](https://www.rubydoc.info/gems/dotenv_validator/) [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v1.4%20adopted-ff69b4.svg)](CODE_OF_CONDUCT.md)
+
 This gem validates `.env` variables. You can configure validation rules by
 adding the appropriate comments to the `.env.sample` file.
 
