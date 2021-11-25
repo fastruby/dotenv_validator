@@ -61,6 +61,32 @@ MY_WEIRD_ENV_VAR=123_ABC #required,format=\d{3}_\w{3}
 
 In the above example, `\d{3}_\w{3}` is converted to a regexp and the value is checked against it.
 
+## If you use `docker-compose`, read this
+
+Docker Compose automatically reads `.env` files present in the project's root when running `docker-compose up`. What this means is that, if you use `dotenv_validator` in an app you run using Docker Compose, you might get exceptions or warnings about your variables being in the wrong format even though they're right. The reason is that, when running `docker-compose up`, docker-compose parses the `.env` file before the Rails application starts. It reads each line as is with a really simple parser (no quotes, comments and trailing spaces handling).
+
+Then, since `docker-compose` already set the environment variables, the Dotenv gem won't override them. It parses the file as we'd expect, but it won't change env variables that are already set.
+
+For more information check this [page](https://docs.docker.com/compose/environment-variables/#set-environment-variables-in-containers) from their docs.
+
+The workaround is to rename your `.env` file when using docker. [Here](https://github.com/bkeepers/dotenv#what-other-env-files-can-i-use) you'll find all naming options acceptable for dotenv and that Docker will not automatically parse.
+
+If renaming is not an option, then you need to remove any comments or trailing whitespaces from your `.env` file:
+```
+SMTP_PORT="25"         #format=int
+```
+needs to become:
+```
+SMTP_PORT="25"
+```
+
+### TL;DR
+Rename your `.env` file according to this [table](https://github.com/bkeepers/dotenv#what-other-env-files-can-i-use)
+
+or
+
+Remove all comments and trailing whitespaces
+
 ## Contributing
 
 Want to make your first contribution to this project? Get started with some of [our good first issues](https://github.com/fastruby/dotenv_validator/contribute)!
