@@ -37,6 +37,7 @@ module DotenvValidator
         when "email" then email?(value)
         when "url" then url?(value)
         when "bool", "boolean" then boolean?(value)
+        when "uuid" then uuid?(value)
         else
           value.match?(Regexp.new(Regexp.last_match(1)))
         end
@@ -120,6 +121,15 @@ module DotenvValidator
   # @return [Boolean] True if it is a boolean value. False otherwise.
   def self.boolean?(string)
     string.match?(/(true|false)/)
+  end
+
+  # It checks the value to check if it is a uuid or not.
+  #
+  # @param [String] A string
+  # @return [Boolean] True if it is a UUID value. False otherwise.
+  def self.uuid?(string)
+    string.match?(/\A[\da-f]{32}\z/i) ||
+      string.match?(/\A[\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12}\z/i)
   end
 
   def self.open_sample_file
