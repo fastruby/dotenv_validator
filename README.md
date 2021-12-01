@@ -73,11 +73,11 @@ The workaround is to rename your `.env` file when using docker. [Here](https://g
 
 If renaming is not an option, then you need to remove any comments or trailing whitespaces from your `.env` file:
 ```
-SMTP_PORT="25"         #format=int
+SMTP_PORT=25         #format=int
 ```
 needs to become:
 ```
-SMTP_PORT="25"
+SMTP_PORT=25
 ```
 
 ### TL;DR
