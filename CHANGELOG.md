@@ -1,5 +1,6 @@
 # main [(unreleased)](https://github.com/fastruby/dotenv_validator/compare/v1.1.0...main)
 
+* [FEATURE: Add UUID format](https://github.com/fastruby/dotenv_validator/pull/54)
 * [FEATURE: Better error management for a scenario where .env.sample is missing](https://github.com/fastruby/dotenv_validator/pull/40)
 * [FEATURE: Add boolean format](https://github.com/fastruby/dotenv_validator/pull/38)
 
