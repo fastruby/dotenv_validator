@@ -1,4 +1,6 @@
-**IMPORTANT: Please read the README before submitting pull requests for this project. Additionally, if your PR closes any open GitHub issues, make sure you include `Closes #XXXX`
+**IMPORTANT**: Please read the README before submitting pull requests for this project. Additionally, if your PR closes any open GitHub issues, make sure you include `Closes #XXXX`
+
+- [ ] Add an entry to `CHANGELOG.md` that links to this PR under the "main (unreleased)" heading.
 
 Description:
 Please include a summary of the change and which issue is fixed or which feature is introduced.
