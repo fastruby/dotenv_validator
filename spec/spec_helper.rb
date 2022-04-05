@@ -11,6 +11,7 @@ if ENV["COVERAGE"] == "true"
 
   SimpleCov.start do
     track_files "lib/**/*.rb"
+    add_filter "lib/dotenv_validator/version.rb"
   end
 
   puts "Using SimpleCov v#{SimpleCov::VERSION}"
