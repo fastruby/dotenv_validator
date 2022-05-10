@@ -31,13 +31,13 @@ module DotenvValidator
 
       valid =
         case Regexp.last_match(1)
-        when "int", "integer" then integer?(value)
-        when "float" then float?(value)
-        when "str", "string" then true
-        when "email" then email?(value)
-        when "url" then url?(value)
-        when "bool", "boolean" then boolean?(value)
-        when "uuid" then uuid?(value)
+        when *integer_options then integer?(value)
+        when *float_options then float?(value)
+        when *string_options then string?(value)
+        when *email_options then email?(value)
+        when *url_options then url?(value)
+        when *boolean_options then boolean?(value)
+        when *uuid_options then uuid?(value)
         else
           value.match?(Regexp.new(Regexp.last_match(1)))
         end
@@ -79,7 +79,17 @@ module DotenvValidator
     raise("Environment variables with invalid format: #{invalid_format.join(", ")}") if invalid_format.any?
   end
 
-  # It checks the value to check if it is a float or not.
+  # It checks the value if it is a string or not.
+  #
+  # @param [String] A string
+  # @return [Boolean] True if it is a string value. False otherwise.
+  def self.string?(string)
+    true if String(string)
+  rescue
+    false
+  end
+
+  # It checks the value if it is a float or not.
   #
   # @param [String] A string
   # @return [Boolean] True if it is a float value. False otherwise.
@@ -89,7 +99,7 @@ module DotenvValidator
     false
   end
 
-  # It checks the value to check if it is an integer or not.
+  # It checks the value if it is an integer or not.
   #
   # @param [String] A string
   # @return [Boolean] True if it is an integer value. False otherwise.
@@ -99,7 +109,7 @@ module DotenvValidator
     false
   end
 
-  # It checks the value to check if it is an email or not.
+  # It checks the value if it is an email or not.
   #
   # @param [String] A string
   # @return [Boolean] True if it is an email value. False otherwise.
@@ -107,7 +117,7 @@ module DotenvValidator
     string.match?(URI::MailTo::EMAIL_REGEXP)
   end
 
-  # It checks the value to check if it is a URL or not.
+  # It checks the value if it is a URL or not.
   #
   # @param [String] A string
   # @return [Boolean] True if it is an URL value. False otherwise.
@@ -115,7 +125,7 @@ module DotenvValidator
     string.match?(/\A#{URI::DEFAULT_PARSER.make_regexp(%w[http https])}\z/)
   end
 
-  # It checks the value to check if it is a boolean or not.
+  # It checks the value if it is a boolean or not.
   #
   # @param [String] A string
   # @return [Boolean] True if it is a boolean value. False otherwise.
@@ -123,7 +133,7 @@ module DotenvValidator
     string.match?(/(true|false)/)
   end
 
-  # It checks the value to check if it is a uuid or not.
+  # It checks the value if it is a uuid or not.
   #
   # @param [String] A string
   # @return [Boolean] True if it is a UUID value. False otherwise.
@@ -155,5 +165,47 @@ module DotenvValidator
     else
       root_or_pwd
     end
+  end
+
+  # Accepted options for the integer type
+  # @return [Array]
+  def self.integer_options
+    %w[int integer Integer]
+  end
+
+  # Accepted options for the float type
+  # @return [Array]
+  def self.float_options
+    %w[float Float]
+  end
+
+  # Accepted options for the string type
+  # @return [Array]
+  def self.string_options
+    %w[str string String]
+  end
+
+  # Accepted options for the email type
+  # @return [Array]
+  def self.email_options
+    %w[email Email]
+  end
+
+  # Accepted options for the url type
+  # @return [Array]
+  def self.url_options
+    %w[url Url]
+  end
+
+  # Accepted options for the boolean type
+  # @return [Array]
+  def self.boolean_options
+    %w[bool boolean Boolean]
+  end
+
+  # Accepted options for the uuid type
+  # @return [Array]
+  def self.uuid_options
+    %w[uuid Uuid]
   end
 end
