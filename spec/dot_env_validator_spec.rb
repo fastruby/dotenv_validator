@@ -150,32 +150,12 @@ RSpec.describe DotenvValidator do
             end
           end
         end
-
-        context "and ENV variable is an Email" do
-          let(:sample_lines) { StringIO.new("DISCOUNT_URL=foo@fastruby.io # format=Email") }
-
-          it "returns true" do
-            ClimateControl.modify DISCOUNT_URL: "user@fastruby.io" do
-              expect(DotenvValidator.check).to be_truthy
-            end
-          end
-        end
       end
 
       context "and there is an url format parameter in the comment" do
         let(:sample_lines) { StringIO.new("DISCOUNT_URL=http://google.com # format=url") }
 
         context "and ENV variable is an url" do
-          it "returns true" do
-            ClimateControl.modify DISCOUNT_URL: "https://fastruby.io" do
-              expect(DotenvValidator.check).to be_truthy
-            end
-          end
-        end
-
-        context "and ENV variable is an url" do
-          let(:sample_lines) { StringIO.new("DISCOUNT_URL=http://google.com # format=Url") }
-
           it "returns true" do
             ClimateControl.modify DISCOUNT_URL: "https://fastruby.io" do
               expect(DotenvValidator.check).to be_truthy
@@ -275,7 +255,7 @@ RSpec.describe DotenvValidator do
 
         context "and ENV variable is a uuid in the default format" do
           let(:sample_lines) do
-            StringIO.new("KEY_ID=9c382b2a-c84f-4dfd-8bc6-89dc413850bb # format=Uuid")
+            StringIO.new("KEY_ID=9c382b2a-c84f-4dfd-8bc6-89dc413850bb # format=UUID")
           end
 
           it "returns true" do
