@@ -31,13 +31,13 @@ module DotenvValidator
 
       valid =
         case Regexp.last_match(1)
-        when "int", "integer" then integer?(value)
-        when "float" then float?(value)
-        when "str", "string" then true
+        when "int", "integer", "Integer" then integer?(value)
+        when "float", "Float" then float?(value)
+        when "str", "string", "String" then true
         when "email" then email?(value)
         when "url" then url?(value)
-        when "bool", "boolean" then boolean?(value)
-        when "uuid" then uuid?(value)
+        when "bool", "boolean", "Boolean" then boolean?(value)
+        when "uuid", "UUID" then uuid?(value)
         else
           value.match?(Regexp.new(Regexp.last_match(1)))
         end
@@ -79,7 +79,7 @@ module DotenvValidator
     raise("Environment variables with invalid format: #{invalid_format.join(", ")}") if invalid_format.any?
   end
 
-  # It checks the value to check if it is a float or not.
+  # It checks if the value is float or not.
   #
   # @param [String] A string
   # @return [Boolean] True if it is a float value. False otherwise.
@@ -89,7 +89,7 @@ module DotenvValidator
     false
   end
 
-  # It checks the value to check if it is an integer or not.
+  # It checks if the value is an integer or not.
   #
   # @param [String] A string
   # @return [Boolean] True if it is an integer value. False otherwise.
@@ -99,7 +99,7 @@ module DotenvValidator
     false
   end
 
-  # It checks the value to check if it is an email or not.
+  # It checks if the value is an email or not.
   #
   # @param [String] A string
   # @return [Boolean] True if it is an email value. False otherwise.
@@ -107,7 +107,7 @@ module DotenvValidator
     string.match?(URI::MailTo::EMAIL_REGEXP)
   end
 
-  # It checks the value to check if it is a URL or not.
+  # It checks if the value is a URL or not.
   #
   # @param [String] A string
   # @return [Boolean] True if it is an URL value. False otherwise.
@@ -115,7 +115,7 @@ module DotenvValidator
     string.match?(/\A#{URI::DEFAULT_PARSER.make_regexp(%w[http https])}\z/)
   end
 
-  # It checks the value to check if it is a boolean or not.
+  # It checks if the value is a boolean or not.
   #
   # @param [String] A string
   # @return [Boolean] True if it is a boolean value. False otherwise.
@@ -123,7 +123,7 @@ module DotenvValidator
     string.match?(/(true|false)/)
   end
 
-  # It checks the value to check if it is a uuid or not.
+  # It checks if the value is a uuid or not.
   #
   # @param [String] A string
   # @return [Boolean] True if it is a UUID value. False otherwise.

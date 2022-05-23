@@ -43,13 +43,13 @@ THIS_IS_A_REQUIRED_EMAIL=123 #required,format=email
 
 ## Formats
 
-- `int` or `integer`
-- `float` (note that all integers are floats too)
-- `str` or `string` (accepts anything)
+- `int` or `integer` or `Integer`
+- `float` or `Float` (note that all integers are floats too)
+- `str` or `string` or `String` (accepts anything)
 - `email` (checks value against `/[\w@]+@[\w@]+\.[\w@]+/`)
 - `url` (checks value against `/https?:\/\/.+/`)
-- `bool` or `boolean` (checks value against `true` or `false`, case sensitive)
-- `uuid` (checks value against `/\A[\da-f]{32}\z/i` or `/\A[\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12}\z/i`)
+- `bool` or `boolean` or `Boolean` (checks value against `true` or `false`, case sensitive)
+- `uuid` or `UUID` (checks value against `/\A[\da-f]{32}\z/i` or `/\A[\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12}\z/i`)
 - any other value acts as a regexp!
 
 ### Regexp format
