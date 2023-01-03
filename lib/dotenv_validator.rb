@@ -29,8 +29,10 @@ module DotenvValidator
 
       next unless config =~ /format=(.*)/
 
+      format = Regexp.last_match(1)
+
       valid =
-        case Regexp.last_match(1)
+        case format
         when "int", "integer", "Integer" then integer?(value)
         when "float", "Float" then float?(value)
         when "str", "string", "String" then true
@@ -42,7 +44,7 @@ module DotenvValidator
           value.match?(Regexp.new(Regexp.last_match(1)))
         end
 
-      invalid_format << variable_name unless valid
+      invalid_format << {name: variable_name, value: value, format: format} unless valid
     end
 
     [missing_variables, invalid_format]
@@ -61,7 +63,8 @@ module DotenvValidator
     end
 
     if invalid_format.any?
-      puts("WARNING - Environment variables with invalid format: #{invalid_format.join(", ")}")
+      puts "WARNING - Environment variables with invalid format:"
+      puts invalid_format_list(invalid_format)
       result = false
     end
 
@@ -76,7 +79,7 @@ module DotenvValidator
 
     raise("Missing environment variables: #{missing_variables.join(", ")}") if missing_variables.any?
 
-    raise("Environment variables with invalid format: #{invalid_format.join(", ")}") if invalid_format.any?
+    raise("Environment variables with invalid format:\n#{invalid_format_list(invalid_format)}") if invalid_format.any?
   end
 
   # It checks if the value is float or not.
@@ -155,5 +158,11 @@ module DotenvValidator
     else
       root_or_pwd
     end
+  end
+
+  def self.invalid_format_list(invalid_format)
+    invalid_format.map do |var|
+      %(- #{var[:name]}: expected "#{var[:value]}" to match "#{var[:format]}" format)
+    end.join("\n")
   end
 end
