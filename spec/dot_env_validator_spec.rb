@@ -5,7 +5,7 @@ RSpec.describe DotenvValidator do
 
   before do
     allow(File).to receive(:exist?).and_return(true)
-    allow(STDOUT).to receive(:puts) # this supresses puts
+    allow($stdout).to receive(:puts) # this supresses puts
   end
 
   describe ".check" do
@@ -129,7 +129,10 @@ RSpec.describe DotenvValidator do
           end
 
           it "displays a warning message in STDOUT" do
-            msg = "WARNING - Environment variables with invalid format: DISCOUNT\n"
+            msg = <<~WARN
+              WARNING - Environment variables with invalid format:
+              - DISCOUNT: expected "twenty" to match "integer" format
+            WARN
 
             ClimateControl.modify DISCOUNT: "twenty" do
               expect do
@@ -171,7 +174,10 @@ RSpec.describe DotenvValidator do
           end
 
           it "displays a warning message in STDOUT" do
-            msg = "WARNING - Environment variables with invalid format: DISCOUNT_URL\n"
+            msg = <<~WARN
+              WARNING - Environment variables with invalid format:
+              - DISCOUNT_URL: expected "foo/bar" to match "url" format
+            WARN
 
             ClimateControl.modify DISCOUNT_URL: "foo/bar" do
               expect do
@@ -202,7 +208,10 @@ RSpec.describe DotenvValidator do
         end
 
         it "displays a warning message in STDOUT" do
-          msg = "WARNING - Environment variables with invalid format: MAYBE\n"
+          msg = <<~WARN
+            WARNING - Environment variables with invalid format:
+            - MAYBE: expected "possibly" to match "boolean" format
+          WARN
 
           ClimateControl.modify MAYBE: "possibly" do
             expect do
@@ -231,7 +240,10 @@ RSpec.describe DotenvValidator do
           end
 
           it "displays a warning message in STDOUT" do
-            msg = "WARNING - Environment variables with invalid format: KEY_ID\n"
+            msg = <<~WARN
+              WARNING - Environment variables with invalid format:
+              - KEY_ID: expected "567_88" to match "\\d{3}_\\w{3}" format
+            WARN
 
             ClimateControl.modify KEY_ID: "567_88" do
               expect do
@@ -285,7 +297,10 @@ RSpec.describe DotenvValidator do
           end
 
           it "displays a warning message in STDOUT" do
-            msg = "WARNING - Environment variables with invalid format: KEY_ID\n"
+            msg = <<~WARN
+              WARNING - Environment variables with invalid format:
+              - KEY_ID: expected "xde67c20bf674b10ae9a5809d9e1d041" to match "uuid" format
+            WARN
 
             expect do
               DotenvValidator.check
@@ -305,7 +320,10 @@ RSpec.describe DotenvValidator do
           end
 
           it "displays a warning message in STDOUT" do
-            msg = "WARNING - Environment variables with invalid format: KEY_ID\n"
+            msg = <<~WARN
+              WARNING - Environment variables with invalid format:
+              - KEY_ID: expected "ade67c20bf674b10a-e9a5809d9e1d041" to match "uuid" format
+            WARN
 
             expect do
               DotenvValidator.check
@@ -325,7 +343,10 @@ RSpec.describe DotenvValidator do
           end
 
           it "displays a warning message in STDOUT" do
-            msg = "WARNING - Environment variables with invalid format: KEY_ID\n"
+            msg = <<~WARN
+              WARNING - Environment variables with invalid format:
+              - KEY_ID: expected "ade67c20bf674b10a809d9e1d041" to match "uuid" format
+            WARN
 
             expect do
               DotenvValidator.check
@@ -345,7 +366,10 @@ RSpec.describe DotenvValidator do
           end
 
           it "displays a warning message in STDOUT" do
-            msg = "WARNING - Environment variables with invalid format: KEY_ID\n"
+            msg = <<~WARN
+              WARNING - Environment variables with invalid format:
+              - KEY_ID: expected "ade67c20bf674b10ae9a5809d9e1d041a89b3d4a567" to match "uuid" format
+            WARN
 
             expect do
               DotenvValidator.check
@@ -420,7 +444,10 @@ RSpec.describe DotenvValidator do
 
         context "and ENV variable is not an integer" do
           it "raises a runtime error with a warning message" do
-            msg = "Environment variables with invalid format: DISCOUNT"
+            msg = <<~EX.chomp
+              Environment variables with invalid format:
+              - DISCOUNT: expected "twenty" to match "integer" format
+            EX
 
             ClimateControl.modify DISCOUNT: "twenty" do
               expect do
@@ -456,7 +483,10 @@ RSpec.describe DotenvValidator do
 
         context "and ENV variable is not a boolean" do
           it "raises a runtime error with a warning message" do
-            msg = "Environment variables with invalid format: MAYBE"
+            msg = <<~EX.chomp
+              Environment variables with invalid format:
+              - MAYBE: expected "possibly" to match "boolean" format
+            EX
 
             ClimateControl.modify MAYBE: "possibly" do
               expect do
@@ -492,7 +522,10 @@ RSpec.describe DotenvValidator do
 
         context "and the ENV variable has invalid characters" do
           it "raises a runtime error with a warning message" do
-            msg = "Environment variables with invalid format: KEY_ID"
+            msg = <<~EX.chomp
+              Environment variables with invalid format:
+              - KEY_ID: expected "xde67c20bf674b10ae9a5809d9e1d041" to match "uuid" format
+            EX
 
             ClimateControl.modify KEY_ID: "xde67c20bf674b10ae9a5809d9e1d041" do
               expect do
@@ -504,7 +537,10 @@ RSpec.describe DotenvValidator do
 
         context "and the ENV variable is in an invalid format" do
           it "raises a runtime error with a warning message" do
-            msg = "Environment variables with invalid format: KEY_ID"
+            msg = <<~EX.chomp
+              Environment variables with invalid format:
+              - KEY_ID: expected "ade67c20bf674b10ae-9a5809d9e1d041" to match "uuid" format
+            EX
 
             ClimateControl.modify KEY_ID: "ade67c20bf674b10ae-9a5809d9e1d041" do
               expect do
@@ -516,7 +552,10 @@ RSpec.describe DotenvValidator do
 
         context "and the ENV variable is too short" do
           it "raises a runtime error with a warning message" do
-            msg = "Environment variables with invalid format: KEY_ID"
+            msg = <<~EX.chomp
+              Environment variables with invalid format:
+              - KEY_ID: expected "ade67c20bf674b10809d9e1d041" to match "uuid" format
+            EX
 
             ClimateControl.modify KEY_ID: "ade67c20bf674b10809d9e1d041" do
               expect do
@@ -528,7 +567,10 @@ RSpec.describe DotenvValidator do
 
         context "and the ENV variable is too long" do
           it "raises a runtime error with a warning message" do
-            msg = "Environment variables with invalid format: KEY_ID"
+            msg = <<~EX.chomp
+              Environment variables with invalid format:
+              - KEY_ID: expected "ade67c20bf674b10ae9a5809d9e1d041a89b3d4a567" to match "uuid" format
+            EX
 
             ClimateControl.modify KEY_ID: "ade67c20bf674b10ae9a5809d9e1d041a89b3d4a567" do
               expect do
