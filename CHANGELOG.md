@@ -1,4 +1,6 @@
-# main [(unreleased)](https://github.com/fastruby/dotenv_validator/compare/v1.1.0...main)
+# main [(unreleased)](https://github.com/fastruby/dotenv_validator/compare/v1.3.0...main)
+
+# v1.3.0 /2023-01-03 [(commits)](https://github.com/fastruby/dotenv_validator/compare/v1.2.0...v1.3.0)
 
 * [FEATURE: Add ruby types support](https://github.com/fastruby/dotenv_validator/pull/61)
 * [FEATURE: Show value and format for invalid values](https://github.com/fastruby/dotenv_validator/pull/62)
