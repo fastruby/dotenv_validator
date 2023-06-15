@@ -4,7 +4,7 @@ require "fast_blank"
 require "pathname"
 require "dotenv_validator/errors"
 
-# Knows how to check the environment variables against the commends defined
+# Knows how to check the environment variables against the comments defined
 # in every line of your .env.sample or .env.template file.
 module DotenvValidator
   # It analyzes the current environment and it compares it to the documentation
