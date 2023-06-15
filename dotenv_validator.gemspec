@@ -14,8 +14,8 @@ Gem::Specification.new do |s|
     "luis@ombulabs.com",
     "robert@ombulabs.com"]
   s.licenses = ["MIT"]
-  s.summary = "Checks required env variables and its format using .env.sample"
-  s.description = "Checks required env variables and its format using dotenv and .env.sample files. Sample files include validation documentation which is interpreted and used to validate your environment."
+  s.summary = "Checks required env variables and its format using .env.sample or .env.template"
+  s.description = "Checks required env variables and its format using dotenv and .env.sample/.env.template files. Sample/Template files include validation documentation which is interpreted and used to validate your environment."
   s.homepage = "https://github.com/fastruby/dotenv_validator"
   s.files = [
     "lib/dotenv_validator/version.rb",

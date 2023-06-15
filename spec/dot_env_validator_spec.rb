@@ -4,13 +4,18 @@ RSpec.describe DotenvValidator do
   let(:sample_lines) { StringIO.new("") }
 
   before do
-    allow(File).to receive(:exist?).and_return(true)
     allow($stdout).to receive(:puts) # this supresses puts
+  end
+  
+  around do |example|
+    ClimateControl.modify RAILS_ROOT: "./spec/support" do
+      example.run
+    end
   end
 
   describe ".check" do
     before do
-      allow(DotenvValidator).to receive(:open_sample_file).and_return(sample_lines)
+      allow(DotenvValidator).to receive(:open_reference_file).and_return(sample_lines)
     end
 
     context "when there are no variables" do
@@ -382,7 +387,7 @@ RSpec.describe DotenvValidator do
 
   describe ".check!" do
     before do
-      allow(DotenvValidator).to receive(:open_sample_file).and_return(sample_lines)
+      allow(DotenvValidator).to receive(:open_reference_file).and_return(sample_lines)
     end
 
     context "when there are no variables" do
@@ -583,24 +588,34 @@ RSpec.describe DotenvValidator do
     end
   end
 
-  describe ".open_sample_file" do
+  describe ".open_reference_file" do
     context "when sample file exists" do
       it "opens the file" do
-        ClimateControl.modify RAILS_ROOT: "spec/support" do
-          expect(DotenvValidator.open_sample_file).to be_truthy
-        end
+        expect(DotenvValidator.open_reference_file).to be_truthy
       end
     end
 
     context "when sample file does not exist" do
       let(:message) do
-        "spec/support/not_found/.env.sample was not found!"
+        "Neither .env.sample nor .env.template files found!"
       end
 
-      it "raises an error because it requires this file to validate ENV" do
-        ClimateControl.modify RAILS_ROOT: "spec/support/not_found" do
+      context "when template file exists" do
+        it "raises an error because it requires this file to validate ENV" do
+          allow(DotenvValidator).to receive(:sample_file).and_raise(Errno::ENOENT)
+          expect(DotenvValidator).to receive(:template_file).and_call_original
+
+          expect(DotenvValidator.open_reference_file).to be_truthy
+        end
+      end
+
+      context "when template file does not exist" do
+        it "raises an error because it requires this file to validate ENV" do
+          allow(DotenvValidator).to receive(:sample_file).and_raise(Errno::ENOENT)
+          allow(DotenvValidator).to receive(:template_file).and_raise(Errno::ENOENT)
+
           expect do
-            DotenvValidator.open_sample_file
+            DotenvValidator.open_reference_file
           end.to raise_error(DotenvValidator::SampleFileNotFoundError, message)
         end
       end

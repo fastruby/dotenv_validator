@@ -4,11 +4,11 @@ require "fast_blank"
 require "pathname"
 require "dotenv_validator/errors"
 
-# Knows how to check the environment variables and compares it to .env.sample
-# and the comments in every line of your .env.sample file.
+# Knows how to check the environment variables against the commends defined
+# in every line of your .env.sample or .env.template file.
 module DotenvValidator
   # It analyzes the current environment and it compares it to the documentation
-  # present in .env.sample.
+  # present in .env.sample or .env.template.
   #
   # @return [[String],[String]] An array with two arrays. First array: List of missing variables. Second array: List of variables with invalid format.
   def self.analyze_variables
@@ -17,7 +17,7 @@ module DotenvValidator
     missing_variables = []
     invalid_format = []
 
-    open_sample_file.each do |line|
+    open_reference_file.each do |line|
       variable, config = line.split(" #")
       variable_name, _sample = variable.split("=")
       value = ENV[variable_name]
@@ -135,14 +135,24 @@ module DotenvValidator
       string.match?(/\A[\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12}\z/i)
   end
 
-  def self.open_sample_file
-    File.open(sample_file)
-  rescue Errno::ENOENT
-    raise DotenvValidator::SampleFileNotFoundError, "#{sample_file} was not found!"
+  def self.open_reference_file
+    begin
+      sample_file
+    rescue Errno::ENOENT
+      begin
+        template_file
+      rescue Errno::ENOENT
+        raise DotenvValidator::SampleFileNotFoundError, "Neither .env.sample nor .env.template files found!"
+      end
+    end
   end
 
   def self.sample_file
-    File.join(root, ".env.sample")
+    File.open(File.join(root, ".env.sample"))
+  end
+
+  def self.template_file
+    File.open(File.join(root, ".env.template"))
   end
 
   # Internal: `Rails.root` is nil in Rails 4.1 before the application is

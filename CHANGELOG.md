@@ -1,5 +1,7 @@
 # main [(unreleased)](https://github.com/fastruby/dotenv_validator/compare/v1.3.0...main)
 
+* [FEATURE: Support defining validations in the .env.template file](https://github.com/fastruby/dotenv_validator/pull/65)
+
 # v1.3.0 /2023-01-03 [(commits)](https://github.com/fastruby/dotenv_validator/compare/v1.2.0...v1.3.0)
 
 * [FEATURE: Add ruby types support](https://github.com/fastruby/dotenv_validator/pull/61)
