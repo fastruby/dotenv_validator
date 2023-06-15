@@ -6,7 +6,7 @@ RSpec.describe DotenvValidator do
   before do
     allow($stdout).to receive(:puts) # this supresses puts
   end
-  
+
   around do |example|
     ClimateControl.modify RAILS_ROOT: "./spec/support" do
       example.run
