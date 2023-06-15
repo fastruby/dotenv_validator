@@ -136,14 +136,12 @@ module DotenvValidator
   end
 
   def self.open_reference_file
+    sample_file
+  rescue Errno::ENOENT
     begin
-      sample_file
+      template_file
     rescue Errno::ENOENT
-      begin
-        template_file
-      rescue Errno::ENOENT
-        raise DotenvValidator::SampleFileNotFoundError, "Neither .env.sample nor .env.template files found!"
-      end
+      raise DotenvValidator::SampleFileNotFoundError, "Neither .env.sample nor .env.template files found!"
     end
   end
 
