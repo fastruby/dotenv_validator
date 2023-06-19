@@ -3,7 +3,7 @@
 [![Gem Version](https://badge.fury.io/rb/dotenv_validator.svg)](https://badge.fury.io/rb/dotenv_validator) [![Matrix Testing + Lint](https://github.com/fastruby/dotenv_validator/actions/workflows/main.yml/badge.svg)](https://github.com/fastruby/dotenv_validator/actions/workflows/main.yml) [![codecov](https://codecov.io/gh/fastruby/dotenv_validator/branch/main/graph/badge.svg)](https://codecov.io/gh/fastruby/dotenv_validator) [![Docs](http://img.shields.io/badge/yard-docs-blue.svg)](https://www.rubydoc.info/gems/dotenv_validator/) [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v1.4%20adopted-ff69b4.svg)](CODE_OF_CONDUCT.md)
 
 This gem validates `.env` variables. You can configure validation rules by
-adding the appropriate comments to the `.env.sample` file.
+adding the appropriate comments to the `.env.sample` or `.env.template` file.
 
 # Installation
 
@@ -33,7 +33,7 @@ bundle update dotenv_validator
 
 # Configuring env variable
 
-In your `.env.sample` file, you can add comments to tell DotenvValidator how to validate the variable:
+In your `.env.sample` or `.env.template` file, you can add comments to tell DotenvValidator how to validate the variable:
 
 ```
 MY_REQUIRED_VAR=value #required
@@ -73,15 +73,19 @@ For more information check this [page](https://docs.docker.com/compose/environme
 The workaround is to rename your `.env` file when using docker. [Here](https://github.com/bkeepers/dotenv#what-other-env-files-can-i-use) you'll find all naming options acceptable for dotenv and that Docker will not automatically parse.
 
 If renaming is not an option, then you need to remove any comments or trailing whitespaces from your `.env` file:
+
 ```
 SMTP_PORT=25         #format=int
 ```
+
 needs to become:
+
 ```
 SMTP_PORT=25
 ```
 
 ### TL;DR
+
 Rename your `.env` file according to this [table](https://github.com/bkeepers/dotenv#what-other-env-files-can-i-use)
 
 or
@@ -96,13 +100,13 @@ Bug reports and pull requests are welcome on GitHub at [https://github.com/fastr
 
 When Submitting a Pull Request:
 
-* If your PR closes any open GitHub issues, please include `Closes #XXXX` in your comment
+- If your PR closes any open GitHub issues, please include `Closes #XXXX` in your comment
 
-* Please include a summary of the change and which issue is fixed or which feature is introduced.
+- Please include a summary of the change and which issue is fixed or which feature is introduced.
 
-* If changes to the behavior are made, clearly describe what changes.
+- If changes to the behavior are made, clearly describe what changes.
 
-* If changes to the UI are made, please include screenshots of the before and after.
+- If changes to the UI are made, please include screenshots of the before and after.
 
 ## Sponsorship
 
