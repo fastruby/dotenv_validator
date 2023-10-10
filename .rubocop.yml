@@ -1,4 +1,8 @@
-inherit_from: .rubocop_todo.yml
+require:
+  - standard
+
+inherit_gem:
+  standard: config/base.yml
 
 AllCops:
   NewCops: disable
