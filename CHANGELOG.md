@@ -2,6 +2,7 @@
 
 * [FEATURE: Support defining validations in the .env.template file](https://github.com/fastruby/dotenv_validator/pull/65)
 * [DX: Use Standardrb's config for RuboCop](https://github.com/fastruby/dotenv_validator/pull/66)
+* [DX: Update GitHub Workflow to test with Ruby 3.2](https://github.com/fastruby/dotenv_validator/pull/67)
 
 # v1.3.0 /2023-01-03 [(commits)](https://github.com/fastruby/dotenv_validator/compare/v1.2.0...v1.3.0)
 
