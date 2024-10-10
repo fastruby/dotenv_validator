@@ -86,7 +86,7 @@ SMTP_PORT=25
 
 ### TL;DR
 
-Rename your `.env` file according to this [table](https://github.com/bkeepers/dotenv#what-other-env-files-can-i-use)
+Rename your `.env` file according to this [table](https://github.com/bkeepers/dotenv?tab=readme-ov-file#customizing-rails)
 
 or
 
